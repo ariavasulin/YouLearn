@@ -14,6 +14,7 @@
 \usepackage{tcolorbox}
 \usepackage{tikz}
 \usepackage{subfiles}
+\usepackage{pdfpages}
 \usepackage{makeidx}
 \makeindex
 
@@ -101,8 +102,22 @@
 \newpage
 
 %----------------------------------------------------------------------
-% LECTURES - Add new lectures here
+% SYLLABUS
 %----------------------------------------------------------------------
+\subfile{../syllabus/syllabus}
+\newpage
+
+%----------------------------------------------------------------------
+% LECTURES — demote \section→\subsection, \subsection→\subsubsection
+%            so lectures nest under the "Lectures" section in the outline
+%----------------------------------------------------------------------
+\section{Lectures}
+
+\let\origsection\section
+\let\origsubsection\subsection
+\let\origsubsubsection\subsubsection
+\let\section\origsubsection
+\let\subsection\origsubsubsection
 
 % Lecture 1
 \subfile{../lec01/lec01}
@@ -114,14 +129,50 @@
 
 % Lecture 3
 \subfile{../lec03/lec03}
+\newpage
 
-% Add more lectures as needed...
+% Lecture 4
 \subfile{../lec04/lec04}
 \newpage
 
 % Lecture 5
 \subfile{../lec05/lec05}
 \newpage
+
+% ADD_LECTURE_HERE — agent appends new \subfile lines above this comment
+
+% Restore original sectioning commands
+\renewcommand{\section}{\origsection}
+\renewcommand{\subsection}{\origsubsection}
+\renewcommand{\subsubsection}{\origsubsubsection}
+
+%----------------------------------------------------------------------
+% ASSIGNMENTS
+%----------------------------------------------------------------------
+\subfile{../assignments/assignments}
+\newpage
+
+%----------------------------------------------------------------------
+% SESSIONS
+%----------------------------------------------------------------------
+\subfile{../sessions/sessions}
+\newpage
+
+%----------------------------------------------------------------------
+% RESOURCES
+%----------------------------------------------------------------------
+\subfile{../resources/resources}
+\newpage
+
+%----------------------------------------------------------------------
+% GLOSSARY
+%----------------------------------------------------------------------
+\subfile{../glossary/glossary}
+\newpage
+
+%----------------------------------------------------------------------
+% INDEX OF DEFINITIONS (auto-generated from \defn{} via makeindex)
+%----------------------------------------------------------------------
 \addcontentsline{toc}{section}{Index of Definitions}
 \printindex
 
