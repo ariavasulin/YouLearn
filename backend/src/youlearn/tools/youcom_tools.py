@@ -56,7 +56,7 @@ class YouComSearchTools(Toolkit):
         """
         resp = httpx.get(
             _API_URL,
-            params={"query": query, "count": self.num_results},
+            params={"query": query},
             headers={"X-API-Key": self.api_key},
             timeout=30.0,
         )
@@ -68,7 +68,7 @@ class YouComSearchTools(Toolkit):
         async with httpx.AsyncClient(timeout=30.0) as client:
             resp = await client.get(
                 _API_URL,
-                params={"query": query, "count": self.num_results},
+                params={"query": query},
                 headers={"X-API-Key": self.api_key},
             )
             resp.raise_for_status()

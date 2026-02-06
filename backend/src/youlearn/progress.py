@@ -233,6 +233,10 @@ async def run_progress_update(settings: Settings | None = None) -> str:
             log.warning("progress_empty_response")
             return "Progress agent returned empty response."
 
+        # Strip markdown code fences if the LLM wrapped output in them
+        raw = re.sub(r"^```(?:latex|tex)?\s*\n", "", raw.strip())
+        raw = re.sub(r"\n```\s*$", "", raw.strip())
+
         # Ensure the output has the subfile wrapper
         if r"\documentclass" not in raw:
             raw = (
@@ -241,6 +245,11 @@ async def run_progress_update(settings: Settings | None = None) -> str:
                 f"{raw}\n\n"
                 "\\end{document}\n"
             )
+
+        # Ensure \end{document} is present (LLM may truncate)
+        if r"\end{document}" not in raw:
+            log.warning("progress_missing_end_document")
+            raw += "\n\n\\end{document}\n"
 
         # Write progress.tex
         progress_path.parent.mkdir(parents=True, exist_ok=True)

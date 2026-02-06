@@ -303,7 +303,11 @@ class NotebookTools(Toolkit):
                     )
                     # makeindex may fail if no .idx exists yet — that's OK
                     if result.returncode != 0 and step[0] == "pdflatex":
-                        return f"Compilation failed at {step[0]}:\n{result.stderr[:500]}"
+                        # pdflatex writes errors to stdout, not stderr
+                        output = result.stdout or result.stderr or "(no output)"
+                        err_lines = [l for l in output.splitlines() if l.startswith("!")]
+                        detail = "\n".join(err_lines) if err_lines else output[-500:]
+                        return f"Compilation failed at {step[0]}:\n{detail}"
             else:
                 # Single-pass for individual lectures
                 result = subprocess.run(
@@ -314,7 +318,10 @@ class NotebookTools(Toolkit):
                     cwd=cwd,
                 )
                 if result.returncode != 0:
-                    return f"Compilation failed:\n{result.stderr[:500]}"
+                    output = result.stdout or result.stderr or "(no output)"
+                    err_lines = [l for l in output.splitlines() if l.startswith("!")]
+                    detail = "\n".join(err_lines) if err_lines else output[-500:]
+                    return f"Compilation failed:\n{detail}"
 
         except FileNotFoundError:
             return "Error: pdflatex not installed. Install TeX Live."
