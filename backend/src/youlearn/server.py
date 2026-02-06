@@ -149,15 +149,17 @@ async def chat_stream(request: ChatRequest) -> EventSourceResponse:
         # 3. Build context
         context = build_context(class_dir, mode.name, hw_id=hw_id)
 
-        # 4. Build system prompt
-        class_name = settings.active_class.replace("-", " ")
-        system_prompt = build_system_prompt(mode.name, context, class_name)
-
-        # 5. Create agent with NotebookTools
+        # 4. Resolve backend URL
         if settings.backend_url:
             backend_url = settings.backend_url
         else:
             backend_url = f"http://localhost:{settings.port}"
+
+        # 5. Build system prompt
+        class_name = settings.active_class.replace("-", " ")
+        system_prompt = build_system_prompt(
+            mode.name, context, class_name, backend_url=backend_url
+        )
         tools = [NotebookTools(class_dir, backend_url=backend_url)]
         if _gdrive_tools is not None:
             tools.append(_gdrive_tools)

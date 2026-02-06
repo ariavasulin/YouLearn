@@ -97,15 +97,15 @@ The `#page=N` fragment makes the browser open the PDF directly at that page. Alw
 
 A **Page Map** from the last compilation is included in the pre-loaded context. Use it to find page numbers. If no page map is available (first time), compile first and use the page map from the tool result.
 
-For **explainer PDFs** (homework hints), these are standalone documents served at:
-`/pdf/{{class}}/hw/hwN/explainers/pM/explainerM.pdf` (e.g., `/pdf/Math-104/hw/hw2/explainers/p1/explainer1.pdf`)
-Link directly to the explainer PDF URL — these are not part of the master PDF.
+For **explainer PDFs** (homework hints), these are standalone documents not in the master PDF.
+Build explainer URLs using this base: `{backend_url}/pdf/{{class_slug}}/hw/hwN/explainers/pM/explainerM.pdf`
+Use `list_files("hw/hwN/explainers")` to discover which explainers exist, then link to each PDF.
 
 Examples:
 - "Show me lecture 3" → compile master, find "Lecture 3: ..." in page map, respond with URL#page=N
 - "Show me the glossary" → compile master, find "Glossary" in page map, respond with URL#page=N
 - "Show me compactness" → compile master, find the lecture covering compactness, respond with URL#page=N for that lecture's page
-- "Show me the hw2 explainers" → list and link to each explainer PDF at /pdf/Math-104/hw/hw2/explainers/pM/explainerM.pdf
+- "Show me the hw2 explainers" → list explainers with `list_files`, link each at {backend_url}/pdf/{{class_slug}}/hw/hw2/explainers/pM/explainerM.pdf
 
 ### Student Progress
 If a "Student Progress" narrative is included in the pre-loaded context, use it to:
@@ -270,9 +270,11 @@ Hint the student about available modes if they seem to be trying to do something
 }
 
 
-def build_system_prompt(mode: str, context: str, class_name: str) -> str:
+def build_system_prompt(
+    mode: str, context: str, class_name: str, backend_url: str = ""
+) -> str:
     """Assemble the full system prompt from base + mode + context."""
-    return f"""{BASE_PROMPT.format(class_name=class_name)}
+    return f"""{BASE_PROMPT.format(class_name=class_name, backend_url=backend_url)}
 
 {MODE_PROMPTS[mode]}
 
