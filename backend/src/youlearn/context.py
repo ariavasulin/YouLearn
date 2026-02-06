@@ -171,6 +171,47 @@ def _list_hw_dirs(class_dir: Path) -> str:
     return "### Homework Directories\n" + "\n".join(f"- {d}/" for d in dirs)
 
 
+def _load_page_map(class_dir: Path) -> str:
+    """Load the page map from master.aux if it exists.
+
+    Returns a formatted string with section -> page mappings,
+    or empty string if no .aux file is available.
+    """
+    aux_path = class_dir / "notes" / "latex" / "master" / "master.aux"
+    if not aux_path.exists():
+        return ""
+
+    content = aux_path.read_text()
+    page_map: dict[str, int] = {}
+
+    pattern = re.compile(
+        r"\\contentsline\s*\{(?:section|subsection)\}"
+        r"\{(?:\\numberline\s*\{[^}]*\})?(.+?)\}"
+        r"\{(\d+)\}"
+    )
+
+    for match in pattern.finditer(content):
+        title = match.group(1).strip()
+        page = int(match.group(2))
+        title = re.sub(r"\\[a-zA-Z]+\s*", "", title)
+        title = title.replace("\\&", "&")
+        title = title.replace("---", "\u2014").replace("--", "\u2013")
+        title = title.replace("{", "").replace("}", "")
+        title = title.replace("$", "")
+        title = re.sub(r"\s+", " ", title).strip()
+        if title:
+            page_map[title] = page
+
+    if not page_map:
+        return ""
+
+    lines = ["### Page Map (from last compilation)"]
+    lines.append("Use these page numbers with `#page=N` when linking to the PDF.")
+    for title, page in page_map.items():
+        lines.append(f"- {title}: page {page}")
+    return "\n".join(lines)
+
+
 def build_context(
     class_dir: Path,
     mode: str,
@@ -300,5 +341,10 @@ def build_context(
     progress = load_progress(class_dir)
     if progress:
         parts.append(progress)
+
+    # Append page map from last compilation if available (all modes)
+    page_map = _load_page_map(class_dir)
+    if page_map:
+        parts.append(page_map)
 
     return "\n\n".join(parts)
