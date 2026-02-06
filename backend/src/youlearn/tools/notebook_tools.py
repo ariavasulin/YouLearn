@@ -27,6 +27,43 @@ class NotebookTools(Toolkit):
         ]
         super().__init__(name="notebook_tools", tools=tools)
 
+    def _parse_page_map(self) -> dict[str, int]:
+        """Parse master.aux to extract section/subsection -> page number mapping.
+
+        Returns a dict like:
+            {"Syllabus": 3, "Lectures": 5, "Lecture 1: January 20, 2026": 5,
+             "Lecture 2: January 22, 2026": 9, "Assignments": 34, ...}
+        """
+        aux_path = self.class_dir / "notes" / "latex" / "master" / "master.aux"
+        if not aux_path.exists():
+            return {}
+
+        content = aux_path.read_text()
+        page_map: dict[str, int] = {}
+
+        # Match: \contentsline {section/subsection}{\numberline {X.Y}Title}{PAGE}{...}
+        # Also match unnumbered: \contentsline {section}{Index of Definitions}{PAGE}{...}
+        pattern = re.compile(
+            r"\\contentsline\s*\{(?:section|subsection)\}"
+            r"\{(?:\\numberline\s*\{[^}]*\})?(.+?)\}"
+            r"\{(\d+)\}"
+        )
+
+        for match in pattern.finditer(content):
+            title = match.group(1).strip()
+            page = int(match.group(2))
+            # Clean up LaTeX artifacts from title
+            title = re.sub(r"\\[a-zA-Z]+\s*", "", title)  # strip commands like \mathbb
+            title = title.replace("\\&", "&")  # restore ampersands
+            title = title.replace("---", "—").replace("--", "–")  # em/en dashes
+            title = title.replace("{", "").replace("}", "")  # strip braces
+            title = title.replace("$", "")  # strip math delimiters
+            title = re.sub(r"\s+", " ", title).strip()  # collapse whitespace
+            if title:
+                page_map[title] = page
+
+        return page_map
+
     def _safe_path(self, path: str) -> Path | None:
         """Resolve a relative path and verify it doesn't escape class_dir."""
         target = (self.class_dir / path).resolve()
@@ -337,6 +374,19 @@ class NotebookTools(Toolkit):
             root_pdf = self.class_dir / f"{self.class_dir.name}-Notes.pdf"
             shutil.copy2(pdf_path, root_pdf)
             download_url = f"{self.backend_url}/pdf/{self.class_slug}/{root_pdf.name}"
+
+            # Parse page map from .aux file
+            page_map = self._parse_page_map()
+            if page_map:
+                pages_str = "\n".join(
+                    f"  - {title}: page {page}"
+                    for title, page in page_map.items()
+                )
+                return (
+                    f"Compiled successfully ({pdf_path.stat().st_size // 1024}KB).\n"
+                    f"PDF URL: {download_url}\n\n"
+                    f"Page map (use #page=N to link to specific pages):\n{pages_str}"
+                )
             return (
                 f"Compiled successfully ({pdf_path.stat().st_size // 1024}KB). "
                 f"Download: {download_url}"
