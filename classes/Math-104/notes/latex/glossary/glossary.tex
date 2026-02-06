@@ -1,0 +1,56 @@
+\documentclass[../master/master.tex]{subfiles}
+
+\begin{document}
+
+\section{Glossary}
+
+\begin{lecturesummary}
+\textbf{Key Definitions:} A glossary of important terms and definitions from the course, organized by topic. Terms marked in \textcolor{red}{\textbf{red bold}} in the lecture notes appear here with their formal definitions and the lecture where they were introduced.
+\end{lecturesummary}
+
+\subsection{Ordered Sets \& Real Numbers (Lectures 1--2)}
+
+\begin{description}[style=nextline, leftmargin=2em]
+    \item[\defn{Member}] $x \in A$ means $x$ is an element of the set $A$. (Lecture 1)
+    \item[\defn{Empty set}] The set $\emptyset$ containing no elements. (Lecture 1)
+    \item[\defn{Subset}] $A \subseteq B$ if every element of $A$ is also in $B$. (Lecture 1)
+    \item[\defn{Proper subset}] $A \subset B$ if $A \subseteq B$ and $A \neq B$. (Lecture 1)
+    \item[\defn{Partial order}] A relation $\leq$ on $S$ that is reflexive, antisymmetric, and transitive. (Lecture 1)
+    \item[\defn{Total order}] A partial order where every two elements are comparable. (Lecture 1)
+    \item[\defn{Upper bound}] $b$ is an upper bound of $E \subseteq S$ if $x \leq b$ for all $x \in E$. (Lecture 1)
+    \item[\defn{Lower bound}] $b$ is a lower bound of $E$ if $b \leq x$ for all $x \in E$. (Lecture 1)
+    \item[\defn{Supremum}] The least upper bound of a set $E$, written $\sup E$. (Lecture 1)
+    \item[\defn{Infimum}] The greatest lower bound of a set $E$, written $\inf E$. (Lecture 1)
+    \item[\defn{Least Upper Bound Property}] Every non-empty subset bounded above has a supremum. (Lecture 1)
+    \item[\defn{Field}] A set $F$ with addition and multiplication satisfying the field axioms. (Lecture 1)
+    \item[\defn{Ordered field}] A field with a total order compatible with the field operations. (Lecture 1)
+    \item[\defn{Dedekind cut}] A partition of $\Q$ into two non-empty sets $A | B$ where every element of $A$ is less than every element of $B$, and $A$ has no maximum. (Lecture 2)
+    \item[\defn{Archimedean property}] For any $x, y \in \R$ with $x > 0$, there exists $n \in \N$ such that $nx > y$. (Lecture 2)
+\end{description}
+
+\subsection{Set Theory \& Countability (Lecture 3)}
+
+\begin{description}[style=nextline, leftmargin=2em]
+    \item[\defn{Countable}] A set $A$ is countable if there exists a bijection $f: A \to \N$ (or $A$ is finite). (Lecture 3)
+    \item[\defn{Uncountable}] A set that is not countable. (Lecture 3)
+    \item[\defn{Cardinality}] Two sets have the same cardinality if there is a bijection between them, written $A \sim B$. (Lecture 3)
+    \item[\defn{Equivalence relation}] A relation that is reflexive, symmetric, and transitive. (Lecture 3)
+\end{description}
+
+\subsection{Topology \& Metric Spaces (Lectures 4--5)}
+
+\begin{description}[style=nextline, leftmargin=2em]
+    \item[\defn{Metric space}] A set $X$ with a distance function $d: X \times X \to \R$ satisfying positivity, symmetry, and the triangle inequality. (Lecture 4)
+    \item[\defn{Open ball}] $B_r(x) = \{y \in X : d(x, y) < r\}$ for $r > 0$. Also called a neighborhood. (Lecture 4)
+    \item[\defn{Open set}] A set $G$ is open if every point of $G$ is an interior point. (Lecture 4)
+    \item[\defn{Closed set}] A set $F$ is closed if its complement $F^c$ is open. Equivalently, $F$ contains all its limit points. (Lecture 4)
+    \item[\defn{Limit point}] $p$ is a limit point of $E$ if every neighborhood of $p$ contains a point $q \in E$ with $q \neq p$. (Lecture 4)
+    \item[\defn{Interior point}] $p$ is an interior point of $E$ if there exists $r > 0$ such that $B_r(p) \subseteq E$. (Lecture 4)
+    \item[\defn{Closure}] $\overline{E} = E \cup E'$ where $E'$ is the set of limit points of $E$. (Lecture 4)
+    \item[\defn{Dense}] $E$ is dense in $X$ if $\overline{E} = X$. (Lecture 4)
+    \item[\defn{Open cover}] A collection of open sets $\{G_\alpha\}$ such that $E \subseteq \bigcup G_\alpha$. (Lecture 5)
+    \item[\defn{Compact}] A set $K$ is compact if every open cover has a finite subcover. (Lecture 5)
+    \item[\defn{Perfect set}] A closed set in which every point is a limit point. (Lecture 5)
+\end{description}
+
+\end{document}

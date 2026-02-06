@@ -34,7 +34,7 @@
 │  └──────────────┘                 │   • NotebookTools (R/W)   │  │
 │                                    │   • LaTeXTools (PDF)      │  │
 │                                    │   • YouComSearch (research)│  │
-│                                    │   • ComposioTools (cal)   │  │
+│                                    │   • ComposioTools (Drive) │  │
 │                                    │  Port 8200                │  │
 │                                    └──────────────────────────┘  │
 │                                              │                    │
@@ -49,8 +49,8 @@
   ┌──────────────┐                ┌──────────────┐
   │  You.com API │                │   Composio   │
   │  (Sponsor #2)│                │  (Sponsor #3)│
-  │  Research &  │                │  Google Cal  │
-  │  Citations   │                │  Scheduling  │
+  │  Research &  │                │  Google Drive│
+  │  Citations   │                │  File Import │
   └──────────────┘                └──────────────┘
 ```
 
@@ -200,7 +200,7 @@ System prompt (mode instructions)
 - Concept connections ("How does this relate to what we learned in Lecture 3?")
 - Generate summary PDFs via LaTeX
 - Research topics via You.com for deeper understanding
-- Suggest review schedule via Composio (Google Calendar)
+- Import study materials from Google Drive via Composio
 
 **Token budget**: Up to 32K context for full notebook, may need to summarize older lectures
 
@@ -244,7 +244,7 @@ System prompt (mode instructions)
 3. Extract any URLs/resources mentioned → append to `resources.md`
 4. Update `notebook.json` metadata
 5. Cross-reference new content with existing notes
-6. (Composio) Schedule next review session on Google Calendar based on spaced repetition
+6. (Composio) Import any referenced materials from Google Drive
 
 ---
 
@@ -316,21 +316,20 @@ class YouComSearchTools(Toolkit):
 - $100 free credits (~16,000 searches)
 - Response includes `results.web[].{title, url, description, snippets}`
 
-### 4. ComposioTools (Agno Integration — Sponsor #3)
+### 4. ComposioDriveTools (Custom Agno Toolkit — Sponsor #3)
 
 ```python
-from composio_agno import ComposioToolSet, Action
+from composio import Composio
 
-toolset = ComposioToolSet()
-composio_tools = toolset.get_actions(actions=[
-    Action.GOOGLECALENDAR_CREATE_EVENT,
-    Action.GOOGLECALENDAR_LIST_EVENTS,
-])
+class ComposioDriveTools(Toolkit):
+    """Search, list, and download files from Google Drive via Composio."""
+    # Tools: find_file, list_files, download_file
+    # Uses composio v0.11 SDK with tools.execute()
 ```
 
-**Use case**: After /End session, agent schedules next review on Google Calendar using spaced repetition logic.
+**Use case**: Student says "grab my lecture slides from Google Drive" → agent searches, downloads, and saves to workspace.
 
-**Auth**: `composio add googlecalendar` CLI for dev, OAuth redirect for production.
+**Auth**: Connect Google Drive via Composio dashboard (app.composio.dev), set `COMPOSIO_API_KEY` in `.env`.
 
 ---
 
@@ -393,12 +392,12 @@ Agent: [Reads session transcript from conversation history]
        [Reads resources.md, adds any new URLs mentioned]
        [Updates notebook.json with new counts]
        [Uses You.com to research any topics that need enrichment]
-       [Uses Composio to schedule next review on Google Calendar]
+       [Uses Composio to import any referenced Google Drive materials]
 Agent: "Session wrapped up! Here's what I did:
         ✓ Saved session summary
         ✓ Added 3 new glossary terms: {terms}
         ✓ Added 2 new resources
-        ✓ Scheduled review for Thursday at 2pm
+        ✓ Imported 1 file from Google Drive
         ✓ Enriched Lecture 3 notes with citations on {topic}"
 ```
 
@@ -464,21 +463,22 @@ services:
 
 **Demo value**: "Watch the agent automatically research and cite sources as it takes lecture notes — the notebook improves itself with every session."
 
-### Sponsor #3: Composio — Google Calendar (Spaced Repetition)
+### Sponsor #3: Composio — Google Drive (File Import)
 
-**What**: Agent schedules review sessions on Google Calendar using spaced repetition intervals.
+**What**: Agent imports files from Google Drive into the class workspace so students can bring in lecture slides, PDFs, and other materials.
 
 **Integration points**:
-1. **During /End**: Schedule next review based on what was covered
-2. **During /Rev**: Check calendar for upcoming reviews, mark completed
-3. **Spaced repetition logic**: 1 day → 3 days → 7 days → 14 days → 30 days
+1. **Any mode**: Student says "grab my slides from Drive" → agent searches, downloads, saves to workspace
+2. **During /Lec**: Import lecture slides or handouts from Drive
+3. **During /Work**: Import assignment PDFs or reference materials from Drive
 
-**Demo value**: "The agent doesn't just help you study — it schedules when you should study next, directly on your Google Calendar."
+**Demo value**: "Just say 'grab my CS 301 slides from Google Drive' and the agent finds and imports them into your notebook."
 
 **Setup**:
 ```bash
-pip install composio-agno
-composio add googlecalendar  # OAuth flow for dev account
+pip install composio  # v0.11+ SDK
+# Connect Google Drive via Composio dashboard (app.composio.dev)
+# Set COMPOSIO_API_KEY in .env
 ```
 
 ---
@@ -528,16 +528,16 @@ composio add googlecalendar  # OAuth flow for dev account
 
 ### Hour 3-4: Composio Integration (Sponsor #3) + /End Mode
 
-**Goal**: Agent schedules reviews on Google Calendar, /End works
+**Goal**: Agent imports files from Google Drive, /End works
 
 | Task | Time | Description |
 |------|------|-------------|
-| Set up Composio auth | 15 min | `pip install composio-agno`, connect Google Calendar |
-| Add Composio tools to agent | 10 min | Calendar create/list actions |
-| Implement /End session flow | 20 min | Summarize, glossary update, schedule review |
-| Test full /End flow | 15 min | End session → calendar event created |
+| Set up Composio auth | 15 min | `pip install composio`, connect Google Drive via dashboard |
+| Add Composio tools to agent | 10 min | Drive find/list/download actions |
+| Implement /End session flow | 20 min | Summarize, glossary update, import materials |
+| Test full Drive flow | 15 min | "Grab my slides from Drive" → file imported |
 
-**Deliverable**: /End creates session summary, updates glossary, schedules review.
+**Deliverable**: /End creates session summary, updates glossary. Drive import works in any mode.
 
 ### Hour 4-5: Polish & Deploy (Sponsor #1)
 
@@ -565,7 +565,7 @@ composio add googlecalendar  # OAuth flow for dev account
 - [ ] /Lec mode — take lecture notes into structured markdown
 - [ ] /Rev mode — review and quiz from notebook
 - [ ] You.com search integration — enrich notes with citations
-- [ ] Composio Google Calendar — schedule review sessions
+- [ ] Composio Google Drive — import files from Drive
 - [ ] Deployed on Render
 
 ### Nice-to-Have (If Time Permits)
@@ -574,7 +574,7 @@ composio add googlecalendar  # OAuth flow for dev account
 - [ ] /End mode — full session wrap-up with all updates
 - [ ] LaTeX PDF generation for beautiful study guides
 - [ ] Tool call streaming (show spinners in UI)
-- [ ] Spaced repetition algorithm for review scheduling
+- [ ] Google Drive folder browsing and bulk import
 - [ ] Upload PDF syllabus → auto-parse into syllabus.md
 - [ ] Cross-lecture concept mapping in glossary
 
@@ -611,7 +611,7 @@ YouLearn/
 │           ├── notebook_tools.py        # NotebookTools (read/write/context)
 │           ├── latex_tools.py           # LaTeXTools (copied from YouLab)
 │           ├── youcom_tools.py          # YouComSearchTools (You.com API)
-│           └── composio_tools.py        # Composio wrapper (Google Calendar)
+│           └── composio_drive_tools.py   # Composio wrapper (Google Drive)
 ├── notebooks/                           # Runtime data (gitignored)
 │   └── {user_id}/
 │       └── {class_slug}/
@@ -645,7 +645,7 @@ dependencies = [
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
     "structlog>=24.1.0",
-    "composio-agno>=0.7.0",
+    "composio>=0.11.0",
 ]
 ```
 
@@ -658,7 +658,7 @@ dependencies = [
 3. **Mode detection in backend** — Not OpenWebUI functions/slash commands (those require frontend mods)
 4. **Agno + OpenRouter** — Proven pattern from YouLab, single API key for model flexibility
 5. **Inline /End over background workers** — More visible to judges, simpler to build
-6. **Composio for Google Calendar** — Has native Agno integration (`composio-agno`), OAuth handled
+6. **Composio for Google Drive** — Custom Agno toolkit wrapping `composio` v0.11 SDK, OAuth via dashboard
 
 ---
 
@@ -668,7 +668,7 @@ dependencies = [
 2. **"/Lec — Today we're covering sorting algorithms..."** → Show structured notes being written
 3. **Show the You.com research** → Agent enriches notes with citations automatically
 4. **"/Rev — Quiz me on what we covered"** → Agent asks questions from the notebook
-5. **"/End"** → Session summary, glossary updated, Google Calendar event created
-6. **Open Google Calendar** → Show the scheduled review session
+5. **"Grab my CS 301 slides from Google Drive"** → Agent searches Drive, imports file to workspace
+6. **"/End"** → Session summary, glossary updated
 7. **Show Render dashboard** → Deployed and running in production
 8. **Generate PDF** → LaTeX-compiled beautiful study guide (if time)
