@@ -987,21 +987,22 @@ This renders the PDF inline in OpenWebUI's artifact viewer. Low priority for the
 This is the build order for a developer implementing this plan:
 
 ### Phase 1: Modes + Context (~30 min)
-1. Create `backend/src/youlearn/tools/__init__.py` (empty)
-2. Create `backend/src/youlearn/modes.py` with `detect_mode()` and all system prompt templates
-3. Create `backend/src/youlearn/context.py` with `extract_lecture_metadata()`, `extract_preamble_commands()`, `discover_lectures()`, and `build_context()`
-4. Test: manually call `build_context()` with each mode against Math-104 directory, verify output
+- [x] Create `backend/src/youlearn/tools/__init__.py` (empty)
+- [x] Create `backend/src/youlearn/modes.py` with `detect_mode()` and all system prompt templates
+- [x] Create `backend/src/youlearn/context.py` with `extract_lecture_metadata()`, `extract_preamble_commands()`, `discover_lectures()`, and `build_context()`
+- [x] Test: manually call `build_context()` with each mode against Math-104 directory, verify output
 
 ### Phase 2: NotebookTools (~30 min)
-5. Create `backend/src/youlearn/tools/notebook_tools.py` with all 6 tool functions
-6. Test: manually call each tool function against Math-104 directory
-7. Test `create_lecture(6, "February 7, 2026", "Sequences")` — verify file created and inserted before ADD_LECTURE_HERE marker
-8. Test `create_session("2026-02-06", "Review", ...)` — verify session .tex created and sessions.tex updated
+- [x] Create `backend/src/youlearn/tools/notebook_tools.py` with all 6 tool functions
+- [x] Test: manually call each tool function against Math-104 directory
+- [x] Test `create_lecture(6, "February 7, 2026", "Sequences")` — verify file created and inserted before ADD_LECTURE_HERE marker
+- [x] Test `create_session("2026-02-06", "Review", ...)` — verify session .tex created and sessions.tex updated
 
 ### Phase 3: Wire into Server (~15 min)
-8. Add `active_class` to `config.py`
-9. Modify `server.py` to use `detect_mode`, `build_context`, `build_system_prompt`, and `NotebookTools`
-10. Remove `FileTools` and `ShellTools` imports
+- [x] Add `active_class` to `config.py`
+- [x] Modify `server.py` to use `detect_mode`, `build_context`, `build_system_prompt`, and `NotebookTools`
+- [x] Remove `FileTools` and `ShellTools` imports
+- [x] Add `GET /pdf/{class_slug}/{filename}` endpoint for inline PDF viewing
 
 ### Phase 4: End-to-End Test (~15 min)
 11. Start backend, send `/Lec Today we're covering sequences` through the pipe

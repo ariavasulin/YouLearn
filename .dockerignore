@@ -1,0 +1,13 @@
+# Only need backend/ and classes/ for the backend Docker build
+openwebui/
+.git/
+thoughts/
+node_modules/
+*.md
+.venv/
+backend/.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example

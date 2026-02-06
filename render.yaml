@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: youlearn-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: standard
+    region: oregon
+    healthCheckPath: /health
+    envVars:
+      - key: YOULEARN_OPENROUTER_API_KEY
+        sync: false
+      - key: YOULEARN_OPENROUTER_MODEL
+        value: "openai/gpt-4o-mini"
+      - key: YOULEARN_YOU_API_KEY
+        sync: false
+      - key: COMPOSIO_API_KEY
+        sync: false
+      - key: YOULEARN_BACKEND_URL
+        sync: false

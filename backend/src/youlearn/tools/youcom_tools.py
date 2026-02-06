@@ -8,7 +8,7 @@ import os
 import httpx
 from agno.tools import Toolkit
 
-_API_URL = "https://api.ydc-index.io/search"
+_API_URL = "https://ydc-index.io/v1/search"
 
 
 class YouComSearchTools(Toolkit):
@@ -30,7 +30,7 @@ class YouComSearchTools(Toolkit):
     def _slim_results(self, data: dict) -> str:
         """Extract essential fields from You.com response."""
         results = []
-        for hit in data.get("hits", []):
+        for hit in data.get("results", {}).get("web", []):
             results.append({
                 "title": hit.get("title", ""),
                 "url": hit.get("url", ""),
@@ -56,7 +56,7 @@ class YouComSearchTools(Toolkit):
         """
         resp = httpx.get(
             _API_URL,
-            params={"query": query, "num_web_results": self.num_results},
+            params={"query": query, "count": self.num_results},
             headers={"X-API-Key": self.api_key},
             timeout=30.0,
         )
@@ -68,7 +68,7 @@ class YouComSearchTools(Toolkit):
         async with httpx.AsyncClient(timeout=30.0) as client:
             resp = await client.get(
                 _API_URL,
-                params={"query": query, "num_web_results": self.num_results},
+                params={"query": query, "count": self.num_results},
                 headers={"X-API-Key": self.api_key},
             )
             resp.raise_for_status()

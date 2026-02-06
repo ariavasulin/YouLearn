@@ -14,6 +14,7 @@ dependencies = [
     "agno>=1.4.5",
     "openai>=1.0.0",
     "sse-starlette>=2.0.0",
+    "composio>=0.11.0",
 ]
 
 [project.scripts]

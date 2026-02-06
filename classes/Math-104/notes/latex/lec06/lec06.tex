@@ -1,10 +1,31 @@
 \documentclass[../master/master.tex]{subfiles}
+
 \begin{document}
 
-\section{Sequences}
+\section{Lecture 6: Introduction to Group Theory}
 
 \begin{lecturesummary}
-\textbf{Lecture Overview:} In Math 104, a sequence is \defn{an ordered list of numbers or objects (called "terms") that follow a specific rule or pattern, where order matters and repetition is allowed, unlike a set}. 
+Group Theory is the study of algebraic structures known as groups, which are sets equipped with an operation that satisfies certain axioms. This lecture will cover the definition of a group, examples of groups, and key properties. 
 \end{lecturesummary}
+
+\subsection{Definition of a Group}
+\begin{summarybox}
+A group is a set $G$ combined with an operation \ast that satisfies the following properties:
+\begin{itemize}[nosep]
+    \item \textbf{Closure:} For all $a, b \in G$, the result of the operation $a \ast b$ is also in $G$.
+    \item \textbf{Associativity:} For all $a, b, c \in G$, $(a \ast b) \ast c = a \ast (b \ast c)$.
+    \item \textbf{Identity Element:} There exists an element $e \in G$ such that for every element $a \in G$, $e \ast a = a \ast e = a$.
+    \item \textbf{Inverse Element:} For each $a \in G$, there exists an element $b \in G$ such that $a \ast b = b \ast a = e$.
+\end{itemize}
+\end{summarybox}
+
+\subsection{Examples of Groups}
+\begin{summarybox}
+\begin{itemize}[nosep]
+    \item The set of integers under addition, $(\mathbb{Z}, +)$, is a group.
+    \item The set of non-zero rational numbers under multiplication, $(\mathbb{Q}^*, \cdot)$, is a group.
+    \item The set of permutations of a finite set forms a group known as the symmetric group.
+\end{itemize}
+\end{summarybox}
 
 \end{document}

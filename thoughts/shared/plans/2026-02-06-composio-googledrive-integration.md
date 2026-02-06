@@ -86,8 +86,8 @@ composio add googledrive  # opens browser for Google OAuth
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] `cd backend && uv sync` succeeds (dependency resolves)
-- [ ] `uv run python -c "from composio_agno import ComposioToolSet, Action, App; print('OK')"` works
+- [x] `cd backend && uv sync` succeeds (dependency resolves)
+- [x] `uv run python -c "from composio_agno import ComposioToolSet, Action, App; print('OK')"` works
 
 #### Manual Verification:
 - [ ] `composio add googledrive` completes OAuth flow successfully
@@ -178,8 +178,8 @@ agent = Agent(
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] `cd backend && uv run youlearn-server` starts without errors (with COMPOSIO_API_KEY set)
-- [ ] `cd backend && uv run youlearn-server` starts without errors (without COMPOSIO_API_KEY — graceful fallback)
+- [x] `cd backend && uv run youlearn-server` starts without errors (with COMPOSIO_API_KEY set)
+- [x] `cd backend && uv run youlearn-server` starts without errors (without COMPOSIO_API_KEY — graceful fallback)
 
 #### Manual Verification:
 - [ ] Send a chat message like "List my Google Drive files" → agent uses Composio tools and returns results
@@ -212,7 +212,7 @@ The agent instructions should mention the Drive capability clearly so the LLM kn
 
 #### Manual Verification:
 - [ ] Demo flow works: student says "grab my CS 301 slides from Google Drive" → agent searches → downloads → confirms
-- [ ] Build plan accurately reflects the Drive integration
+- [x] Build plan accurately reflects the Drive integration
 
 ---
 

@@ -31,7 +31,10 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8200
 
-    model_config = {"env_prefix": "YOULEARN_", "env_file": _ENV_FILE}
+    # Public URL for PDF download links (set in production)
+    backend_url: str = ""
+
+    model_config = {"env_prefix": "YOULEARN_", "env_file": _ENV_FILE, "extra": "ignore"}
 
 
 @lru_cache

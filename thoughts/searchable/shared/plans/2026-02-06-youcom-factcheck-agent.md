@@ -150,9 +150,9 @@ class YouComSearchTools(Toolkit):
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] `python -c "from youlearn.tools.youcom_tools import YouComSearchTools; print('OK')"` imports cleanly
-- [ ] Module has both `search_web` (sync) and `asearch_web` (async) methods
-- [ ] `_slim_results` extracts only `title`, `url`, `snippets` from response
+- [x] `python -c "from youlearn.tools.youcom_tools import YouComSearchTools; print('OK')"` imports cleanly
+- [x] Module has both `search_web` (sync) and `asearch_web` (async) methods
+- [x] `_slim_results` extracts only `title`, `url`, `snippets` from response
 
 #### Manual Verification:
 - [ ] With a valid `YOULEARN_YOU_API_KEY`, calling `search_web("Hermite transcendental e")` returns JSON with search results
@@ -278,9 +278,9 @@ async def run_fact_check(settings: Settings | None = None) -> str:
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] `python -c "from youlearn.factcheck import run_fact_check; print('OK')"` imports cleanly
-- [ ] `FACT_CHECK_INSTRUCTIONS` contains "FACT-CHECK" comment instruction
-- [ ] `run_fact_check` creates an Agent with both `YouComSearchTools` and `NotebookTools`
+- [x] `python -c "from youlearn.factcheck import run_fact_check; print('OK')"` imports cleanly
+- [x] `FACT_CHECK_INSTRUCTIONS` contains "FACT-CHECK" comment instruction
+- [x] `run_fact_check` creates an Agent with both `YouComSearchTools` and `NotebookTools`
 
 #### Manual Verification:
 - [ ] With valid API keys, `asyncio.run(run_fact_check())` produces a report mentioning lecture claims
@@ -351,10 +351,10 @@ YOULEARN_YOU_API_KEY=
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Server starts without errors: `cd backend && make server`
-- [ ] Health check works: `curl localhost:8200/health`
-- [ ] Trigger returns correct response: `curl -X POST localhost:8200/fact-check/trigger` returns `{"status":"fact-check started"}` (or 400 if no API key)
-- [ ] No import errors on startup
+- [x] Server starts without errors: `cd backend && make server`
+- [x] Health check works: `curl localhost:8200/health`
+- [x] Trigger returns correct response: `curl -X POST localhost:8200/fact-check/trigger` returns `{"status":"fact-check started"}` (or 400 if no API key)
+- [x] No import errors on startup
 
 #### Manual Verification:
 - [ ] With valid API keys, `curl -X POST localhost:8200/fact-check/trigger` starts a background fact-check (visible in server logs)
