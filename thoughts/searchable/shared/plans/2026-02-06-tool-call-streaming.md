@@ -142,7 +142,7 @@ Note: The `response_chunks` list is kept for potential future use (e.g., saving 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Server starts without import errors: `cd backend && make server`
+- [x] Server starts without import errors: `cd backend && make server`
 - [ ] Health check responds: `curl http://localhost:8200/health`
 
 #### Manual Verification:
@@ -249,8 +249,8 @@ This is noted as a decision to make during testing, not a blocker for implementa
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Backend starts: `cd backend && make server`
-- [ ] Pipe has no syntax errors: `cd backend && .venv/bin/python -c "import pipe"`
+- [x] Backend starts: `cd backend && make server`
+- [x] Pipe has no syntax errors: `cd backend && .venv/bin/python -c "import pipe"`
 
 #### Manual Verification:
 - [ ] Tool calls render as collapsible blocks in OpenWebUI

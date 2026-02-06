@@ -611,7 +611,7 @@ YouLearn/
 │           ├── notebook_tools.py        # NotebookTools (read/write/context)
 │           ├── latex_tools.py           # LaTeXTools (copied from YouLab)
 │           ├── youcom_tools.py          # YouComSearchTools (You.com API)
-│           └── composio_tools.py        # Composio wrapper (Google Calendar)
+│           └── composio_drive_tools.py   # Composio wrapper (Google Drive)
 ├── notebooks/                           # Runtime data (gitignored)
 │   └── {user_id}/
 │       └── {class_slug}/
@@ -645,7 +645,7 @@ dependencies = [
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
     "structlog>=24.1.0",
-    "composio-agno>=0.7.0",
+    "composio>=0.11.0",
 ]
 ```
 
@@ -658,7 +658,7 @@ dependencies = [
 3. **Mode detection in backend** — Not OpenWebUI functions/slash commands (those require frontend mods)
 4. **Agno + OpenRouter** — Proven pattern from YouLab, single API key for model flexibility
 5. **Inline /End over background workers** — More visible to judges, simpler to build
-6. **Composio for Google Calendar** — Has native Agno integration (`composio-agno`), OAuth handled
+6. **Composio for Google Drive** — Custom Agno toolkit wrapping `composio` v0.11 SDK, OAuth via dashboard
 
 ---
 
@@ -668,7 +668,7 @@ dependencies = [
 2. **"/Lec — Today we're covering sorting algorithms..."** → Show structured notes being written
 3. **Show the You.com research** → Agent enriches notes with citations automatically
 4. **"/Rev — Quiz me on what we covered"** → Agent asks questions from the notebook
-5. **"/End"** → Session summary, glossary updated, Google Calendar event created
-6. **Open Google Calendar** → Show the scheduled review session
+5. **"Grab my CS 301 slides from Google Drive"** → Agent searches Drive, imports file to workspace
+6. **"/End"** → Session summary, glossary updated
 7. **Show Render dashboard** → Deployed and running in production
 8. **Generate PDF** → LaTeX-compiled beautiful study guide (if time)

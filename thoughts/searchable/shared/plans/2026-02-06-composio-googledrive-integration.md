@@ -212,7 +212,7 @@ The agent instructions should mention the Drive capability clearly so the LLM kn
 
 #### Manual Verification:
 - [ ] Demo flow works: student says "grab my CS 301 slides from Google Drive" → agent searches → downloads → confirms
-- [ ] Build plan accurately reflects the Drive integration
+- [x] Build plan accurately reflects the Drive integration
 
 ---
 
