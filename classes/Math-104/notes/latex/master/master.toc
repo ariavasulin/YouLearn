@@ -1,0 +1,53 @@
+\contentsline {section}{\numberline {1}Syllabus}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Course Information}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Course Requirements}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Learning Objectives}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Assignments}{3}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Course Calendar}{4}{subsection.1.5}%
+\contentsline {section}{\numberline {2}Lectures}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Lecture 1: January 20, 2026}{5}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Ordered sets and the least-upper-bound property}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Fields}{7}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}Lecture 2: January 22, 2026}{9}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Dedekind Cuts}{9}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Field Operations on Cuts}{9}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Least Upper Bound Property}{9}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Embedding $\mathbb {Q}$ into $\mathbb {R}$}{10}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Properties of $\mathbb {R}$}{10}{subsubsection.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.6}The Roots of Reals}{10}{subsubsection.2.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.7}Decimals, Binaries, Ternaries}{12}{subsubsection.2.2.7}%
+\contentsline {subsubsection}{\numberline {2.2.8}The Complex Field}{12}{subsubsection.2.2.8}%
+\contentsline {subsubsection}{\numberline {2.2.9}The Euclidean Spaces}{13}{subsubsection.2.2.9}%
+\contentsline {subsection}{\numberline {2.3}Lecture 3: January 27, 2026}{15}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Functions}{15}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Equivalence Relations}{15}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Cardinality}{16}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Unions and Intersections of Sets}{17}{subsubsection.2.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.5}The (Un)countability of Number Systems}{18}{subsubsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.4}Lecture 4: January 29, 2026}{21}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Topological Spaces}{21}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Metric Topology}{23}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Closed Sets}{25}{subsubsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.5}Lecture 5: February 3, 2026}{29}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Compactness}{29}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Subspace Topology}{29}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Perfect Sets}{32}{subsubsection.2.5.3}%
+\contentsline {section}{\numberline {3}Assignments}{34}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Homework 1 --- Rudin Chapter 1}{34}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Homework 2 --- Rudin Chapter 2}{38}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Student Progress}{43}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Where We Are}{43}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}The Journey So Far}{43}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Edges of Understanding}{44}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Looking Forward}{44}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Sessions}{45}{section.5}%
+\contentsline {subsection}{\numberline {5.1}February 6, 2026 --- Review Session}{45}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Resources}{46}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Primary Textbook}{46}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Supplementary Materials}{46}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Online Resources}{46}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Glossary}{47}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Ordered Sets \& Real Numbers (Lectures 1--2)}{47}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Set Theory \& Countability (Lecture 3)}{48}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Topology \& Metric Spaces (Lectures 4--5)}{48}{subsection.7.3}%
+\contentsline {section}{Index of Definitions}{49}{subsection.7.3}%
