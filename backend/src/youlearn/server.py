@@ -158,7 +158,11 @@ async def chat_stream(request: ChatRequest) -> EventSourceResponse:
         # 5. Build system prompt
         class_name = settings.active_class.replace("-", " ")
         system_prompt = build_system_prompt(
-            mode.name, context, class_name, backend_url=backend_url
+            mode.name,
+            context,
+            class_name,
+            backend_url=backend_url,
+            class_slug=settings.active_class,
         )
         tools = [NotebookTools(class_dir, backend_url=backend_url)]
         if _gdrive_tools is not None:
