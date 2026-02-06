@@ -104,23 +104,27 @@ async def trigger_progress(background_tasks: BackgroundTasks) -> dict[str, str]:
     return {"status": "progress update started"}
 
 
-@app.get("/pdf/{class_slug}/{filename}")
-async def serve_pdf(class_slug: str, filename: str) -> FileResponse:
-    """Serve a compiled PDF from the classes directory."""
+@app.get("/pdf/{class_slug}/{filepath:path}")
+async def serve_pdf(class_slug: str, filepath: str) -> FileResponse:
+    """Serve a compiled PDF from the classes directory.
+
+    Supports nested paths like /pdf/Math-104/hw/hw2/explainers/p1/explainer1.pdf
+    """
     settings = get_settings()
     workspace = Path(settings.workspace)
-    # Only allow .pdf files, no path traversal
-    if not filename.endswith(".pdf") or "/" in filename or ".." in filename:
+    # Only allow .pdf files, block path traversal
+    if not filepath.endswith(".pdf") or ".." in filepath:
         raise HTTPException(status_code=400, detail="Invalid filename")
-    pdf_path = (workspace / class_slug / filename).resolve()
+    pdf_path = (workspace / class_slug / filepath).resolve()
     if not str(pdf_path).startswith(str(workspace.resolve())):
         raise HTTPException(status_code=400, detail="Invalid path")
     if not pdf_path.exists():
         raise HTTPException(status_code=404, detail="PDF not found")
+    display_name = Path(filepath).name
     return FileResponse(
         pdf_path,
         media_type="application/pdf",
-        headers={"Content-Disposition": f"inline; filename={filename}"},
+        headers={"Content-Disposition": f"inline; filename={display_name}"},
     )
 
 
