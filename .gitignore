@@ -1,3 +1,7 @@
+# Backend
+backend/.env
+backend/.venv/
+
 x.py
 yarn.lock
 .DS_Store

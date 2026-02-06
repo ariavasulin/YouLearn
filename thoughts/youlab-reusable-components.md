@@ -307,7 +307,7 @@ async def chat_stream(request: ChatRequest):
     agent = Agent(
         model=OpenRouter(
             api_key=os.getenv("OPENROUTER_API_KEY"),
-            id="anthropic/claude-sonnet-4-20250514",
+            id="openai/gpt-4o-mini",
         ),
         tools=[
             FileTools(base_dir=WORKSPACE),
