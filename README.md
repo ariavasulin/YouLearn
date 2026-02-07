@@ -4,7 +4,7 @@
 
 Built in 5 hours for the [Continual Learning Hackathon](https://lu.ma/continuallearning). YouLearn replaces scattered notes, static PDFs, and generic chatbots with a single AI agent that reads, writes, compiles, and fact-checks a real LaTeX notebook — then remembers your learning journey across sessions.
 
-**Demo notebook:** A full Math 104 (Intro to Real Analysis) course with 5 lectures, 2 homework sets, a glossary, and auto-generated index.
+**Demo notebook:** A full Math 104 (Intro to Real Analysis) course with 5 lectures, 2 homework sets, a glossary, and auto-generated index. Check it out here: https://drive.google.com/file/d/11edgzTcymJqX6K1sXf_Gs1CqYOxdJsKQ/view?usp=sharing
 
 ---
 
