@@ -8,6 +8,7 @@ node_modules/
 backend/.venv/
 __pycache__/
 *.pyc
+docker-compose.yml
 .env
 .env.*
 !.env.example

@@ -1,0 +1,19 @@
+services:
+  youlearn-backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: youlearn-backend
+    restart: unless-stopped
+    ports:
+      - "10000:10000"
+    environment:
+      - YOULEARN_OPENROUTER_API_KEY=${YOULEARN_OPENROUTER_API_KEY}
+      - YOULEARN_OPENROUTER_MODEL=${YOULEARN_OPENROUTER_MODEL:-openai/gpt-4o-mini}
+      - YOULEARN_BACKEND_URL=${YOULEARN_BACKEND_URL:-http://localhost:10000}
+    networks:
+      - openwebui-network
+
+networks:
+  openwebui-network:
+    external: true

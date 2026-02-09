@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import json
 import re
 from pathlib import Path
@@ -21,7 +20,7 @@ from agno.run.agent import (
     IntermediateRunContentEvent,
     ToolCallErrorEvent,
 )
-from fastapi import BackgroundTasks, FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -32,29 +31,10 @@ if TYPE_CHECKING:
 
 from youlearn.config import get_settings
 from youlearn.context import build_context
-from youlearn.factcheck import run_fact_check
-from youlearn.progress import run_progress_update
 from youlearn.modes import build_system_prompt, detect_mode
 from youlearn.tools.notebook_tools import NotebookTools
 
 log = structlog.get_logger()
-
-# Load .env so COMPOSIO_API_KEY (unprefixed) is available via os.getenv
-from dotenv import load_dotenv
-load_dotenv(Path(__file__).parent.parent.parent / ".env")
-
-# Composio Google Drive tools (optional — needs COMPOSIO_API_KEY)
-_gdrive_tools = None
-try:
-    from youlearn.tools.composio_drive_tools import ComposioDriveTools
-    import os
-    if os.getenv("COMPOSIO_API_KEY"):
-        _gdrive_tools = ComposioDriveTools()
-        log.info("composio_gdrive_enabled")
-    else:
-        log.info("composio_gdrive_skipped", reason="COMPOSIO_API_KEY not set")
-except Exception as exc:
-    log.warning("composio_gdrive_init_failed", error=str(exc))
 
 app = FastAPI(title="YouLearn Backend", version="0.1.0")
 
@@ -82,26 +62,6 @@ class ChatRequest(BaseModel):
 async def health() -> dict[str, str]:
     return {"status": "ok", "service": "youlearn"}
 
-
-@app.post("/fact-check/trigger")
-async def trigger_fact_check(background_tasks: BackgroundTasks) -> dict[str, str]:
-    """Manually trigger a fact-check run on the notebook.
-
-    The fact-check runs in the background. Check server logs for results.
-    """
-    settings = get_settings()
-    if not settings.you_api_key:
-        raise HTTPException(status_code=400, detail="YOULEARN_YOU_API_KEY not configured")
-    background_tasks.add_task(run_fact_check, settings)
-    return {"status": "fact-check started"}
-
-
-@app.post("/progress/trigger")
-async def trigger_progress(background_tasks: BackgroundTasks) -> dict[str, str]:
-    """Manually trigger a progress narrative update."""
-    settings = get_settings()
-    background_tasks.add_task(run_progress_update, settings)
-    return {"status": "progress update started"}
 
 
 @app.get("/pdf/{class_slug}/{filepath:path}")
@@ -165,8 +125,6 @@ async def chat_stream(request: ChatRequest) -> EventSourceResponse:
             class_slug=settings.active_class,
         )
         tools = [NotebookTools(class_dir, backend_url=backend_url)]
-        if _gdrive_tools is not None:
-            tools.append(_gdrive_tools)
 
         agent = Agent(
             model=OpenRouter(
@@ -239,28 +197,6 @@ async def chat_stream(request: ChatRequest) -> EventSourceResponse:
                         }
 
             yield {"event": "message", "data": json.dumps({"type": "done"})}
-
-            # Auto-trigger fact-check after /Done mode
-            if mode.name == "done" and settings.you_api_key:
-                asyncio.create_task(run_fact_check(settings))
-                yield {
-                    "event": "message",
-                    "data": json.dumps({
-                        "type": "status",
-                        "content": "Fact-check agent started in background...",
-                    }),
-                }
-
-            # Auto-trigger progress update after /Done mode
-            if mode.name == "done":
-                asyncio.create_task(run_progress_update(settings))
-                yield {
-                    "event": "message",
-                    "data": json.dumps({
-                        "type": "status",
-                        "content": "Updating student progress narrative...",
-                    }),
-                }
 
         except Exception as e:
             log.exception("chat_stream_error", error=str(e))

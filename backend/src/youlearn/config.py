@@ -18,9 +18,6 @@ class Settings(BaseSettings):
     openrouter_api_key: str = ""
     openrouter_model: str = "openai/gpt-4o-mini"
 
-    # You.com Search API
-    you_api_key: str = ""
-
     # Workspace — where the agent reads/writes files
     workspace: str = str(Path(__file__).parent.parent.parent.parent / "classes")
 

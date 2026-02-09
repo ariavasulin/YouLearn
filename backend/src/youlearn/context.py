@@ -5,9 +5,6 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from youlearn.factcheck import load_fact_check_report
-from youlearn.progress import load_progress
-
 _RE_RENEW = re.compile(r"\\renewcommand\{\\(\w+)\}\{(.+?)\}")
 _RE_SUMMARY = re.compile(
     r"\\begin\{lecturesummary\}(.*?)\\end\{lecturesummary\}",
@@ -331,16 +328,6 @@ def build_context(
 
         # 4. Sessions
         parts.append(_list_sessions(class_dir))
-
-    # Append fact-check report if available (all modes)
-    fact_report = load_fact_check_report(class_dir)
-    if fact_report:
-        parts.append(fact_report)
-
-    # Append student progress narrative if available (all modes)
-    progress = load_progress(class_dir)
-    if progress:
-        parts.append(progress)
 
     # Append page map from last compilation if available (all modes)
     page_map = _load_page_map(class_dir)
